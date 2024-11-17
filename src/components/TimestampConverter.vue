@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import TimeConverter from '@/utils/timeConverter';
 export default {
   data() {
     return {
@@ -30,11 +31,68 @@ export default {
       ]
     };
   },
+  watch: {
+    inputTime(newTime) {
+      let type = this.determineTimestampType(newTime);
+      let timeInput;
+      switch (type) {
+        case '10Timestamp':
+          timeInput = newTime + '000';
+          break;
+
+        case '13Timestamp':
+          timeInput = newTime;
+          break;
+        case 'date':
+          timeInput = new Date(newTime).getTime();
+          break;
+        default:
+          console.log('error');
+          break;
+      }
+      console.log(timeInput);
+      const converter = new TimeConverter(timeInput);
+      this.formItems = converter.toAllFormats();
+    }
+  },
   methods: {
     copyToClipboard(value) {
       navigator.clipboard.writeText(value).then(() => {
         this.$message.success("复制成功");
       });
+    },
+
+    determineTimestampType(input) {
+      // 检查输入是否为有效的字符串
+      if (typeof input !== 'string' || input.trim() === '') {
+        return 'error';
+      }
+
+      // 1. 判断是否为 10 位时间戳
+      if (/^\d{10}$/.test(input)) {
+        return '10Timestamp';
+      }
+
+      // 2. 判断是否为 13 位时间戳
+      if (/^\d{13}$/.test(input)) {
+        return '13Timestamp';
+      }
+
+      // 3. 判断是否为日期时间字符串（比如 "yyyy-MM-dd" 或 "yyyy-MM-dd HH:mm:ss"）
+      // 正则表达式匹配日期时间格式
+      const datePattern1 = /^\d{4}-\d{2}-\d{2}$/; // yyyy-MM-dd
+      const datePattern2 = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/; // yyyy-MM-dd HH:mm:ss
+
+      if (datePattern1.test(input) || datePattern2.test(input)) {
+        // 尝试将字符串转换为 Date 对象并判断是否合法
+        const date = new Date(input);
+        if (!isNaN(date.getTime())) {
+          return 'date';
+        }
+      }
+
+      // 如果不符合以上任何一种，返回 "Unknown"
+      return 'error';
     }
   }
 };
