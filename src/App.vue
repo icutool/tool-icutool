@@ -12,10 +12,7 @@
         <el-submenu index="2">
           <template slot="title">网络工具</template>
           <el-menu-item index="/encoding">编码/加密</el-menu-item>
-          <el-menu-item index="/network-tool">网络工具</el-menu-item>
-          <el-menu-item index="/image-processing">图片处理</el-menu-item>
         </el-submenu>
-        <el-menu-item index="/api">在线API</el-menu-item>
       </el-menu>
       <div class="navbar-right">
         <el-button type="primary" @click="login">登录</el-button>
@@ -29,6 +26,21 @@
 <script>
 export default {
   name: 'App',
+  metaInfo() {
+    return {
+      title: 'icutool编程工具 - 时间戳转换、IP查询与编码工具',
+      meta: [
+        { name: 'description', content: 'icutool提供时间戳转换、IP地址查询、编解码工具，专为程序员打造。使用我们的网站，快速进行编程相关任务的工具查询。' },
+        { name: 'keywords', content: '时间戳转换, IP查询, 编解码工具, 程序员工具, 网络工具, 编程工具' },
+        { name: 'author', content: 'icutool' },
+        { name: 'robots', content: 'index, follow' },
+        { property: 'og:title', content: 'icutool编程工具 - 时间戳转换、IP查询与编码工具' },
+        { property: 'og:description', content: 'icutool提供时间戳转换、IP地址查询、编解码工具，专为程序员打造。' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:url', content: window.location.href }
+      ]
+    };
+  },
   methods: {
     login() {
       this.$router.push('/login');
@@ -46,8 +58,10 @@ export default {
 }
 
 .navbar {
-  display: flex; /*将元素设置为弹性盒子模型显示，这样可以更容易地控制子元素的排列和对齐*/
-  justify-content: space-between; /*在水平方向上均匀分布子元素，第一个子元素紧贴容器的开始位置，最后一个子元素紧贴容器的结束位置，中间的子元素平均分配剩余的空间。*/
+  display: flex;
+  /*将元素设置为弹性盒子模型显示，这样可以更容易地控制子元素的排列和对齐*/
+  justify-content: space-between;
+  /*在水平方向上均匀分布子元素，第一个子元素紧贴容器的开始位置，最后一个子元素紧贴容器的结束位置，中间的子元素平均分配剩余的空间。*/
   align-items: center;
   padding: 0 20px;
   background-color: #fff;
@@ -102,9 +116,12 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 500; /* 使文字看起来更清晰 */
+  font-weight: 500;
+  /* 使文字看起来更清晰 */
   text-align: center;
-  line-height: 0%; /* 确保文本行高合适 */
-  padding: 0 15px; /* 控制按钮内边距 */
+  line-height: 0%;
+  /* 确保文本行高合适 */
+  padding: 0 15px;
+  /* 控制按钮内边距 */
 }
 </style>
