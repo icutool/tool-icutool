@@ -16,6 +16,21 @@
 <script>
 import TimeConverter from '@/utils/timeConverter';
 export default {
+  metaInfo() {
+    return {
+      title: '时间戳转换 - icutool编程工具',
+      meta: [
+        { name: 'description', content: 'icutool提供时间戳转换、IP地址查询、编解码工具，专为程序员打造。使用我们的网站，快速进行编程相关任务的工具查询。' },
+        { name: 'keywords', content: '时间戳转换, IP查询, 编解码工具, 程序员工具, 网络工具, 编程工具' },
+        { name: 'author', content: 'icutool' },
+        { name: 'robots', content: 'index, follow' },
+        { property: 'og:title', content: 'icutool编程工具 - 时间戳转换、IP查询与编码工具' },
+        { property: 'og:description', content: 'icutool提供时间戳转换、IP地址查询、编解码工具，专为程序员打造。' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:url', content: window.location.href }
+      ]
+    };
+  },
   data() {
     return {
       inputTime: "",
@@ -95,13 +110,13 @@ export default {
       const datePattern3 = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}$/; //2024-11-18T09:48:05.492
       const datePattern4 = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/; //2024-11-18T09:48:05.492z
       const datePattern5 = new RegExp(
-                            `^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\\s
+        `^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\\s
                             (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\s
                             \\d{1,2}\\s
                             \\d{2}:\\d{2}:\\d{2}\\s
                             (CST|EST|PST|GMT|UTC|[A-Z]{3})\\s
                             \\d{4}$`
-                            );
+      );
       if (datePattern1.test(input) || datePattern2.test(input) || datePattern3.test(input) || datePattern4.test(input) || datePattern5.test(input)) {
         // 尝试将字符串转换为 Date 对象并判断是否合法
         const date = new Date(input);

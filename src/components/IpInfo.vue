@@ -39,6 +39,21 @@
 <script>
 import { getIpInfo } from "@/api/request";
 export default {
+    metaInfo() {
+    return {
+      title: 'IP查询 - icutool编程工具',
+      meta: [
+        { name: 'description', content: 'icutool提供时间戳转换、IP地址查询、编解码工具，专为程序员打造。使用我们的网站，快速进行编程相关任务的工具查询。' },
+        { name: 'keywords', content: '时间戳转换, IP查询, 编解码工具, 程序员工具, 网络工具, 编程工具' },
+        { name: 'author', content: 'icutool' },
+        { name: 'robots', content: 'index, follow' },
+        { property: 'og:title', content: 'icutool编程工具 - 时间戳转换、IP查询与编码工具' },
+        { property: 'og:description', content: 'icutool提供时间戳转换、IP地址查询、编解码工具，专为程序员打造。' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:url', content: window.location.href }
+      ]
+    };
+  },
     data() {
         return {
             ipAddress: "", // 用户输入的IP地址
