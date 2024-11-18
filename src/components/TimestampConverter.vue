@@ -22,7 +22,6 @@ export default {
       formItems: [
         { label: "本地时间", value: "" },
         { label: "UTC时间", value: "" },
-        { label: "JS时间", value: "" },
         { label: "ISO 8601", value: "" },
         { label: "RFC 2822", value: "" },
         { label: "Timestamp（毫秒）", value: "" },
@@ -33,13 +32,21 @@ export default {
   },
   watch: {
     inputTime(newTime) {
+      this.formItems = [
+        { label: "本地时间", value: "" },
+        { label: "UTC时间", value: "" },
+        { label: "ISO 8601", value: "" },
+        { label: "RFC 2822", value: "" },
+        { label: "Timestamp（毫秒）", value: "" },
+        { label: "Unix timestamp（秒）", value: "" },
+        { label: "Timestamp HEX", value: "" }
+      ]
       let type = this.determineTimestampType(newTime);
       let timeInput;
       switch (type) {
         case '10Timestamp':
           timeInput = newTime + '000';
           break;
-
         case '13Timestamp':
           timeInput = newTime;
           break;
@@ -49,6 +56,9 @@ export default {
         default:
           console.log('error');
           break;
+      }
+      if (isNaN(timeInput)) {
+        return;
       }
       console.log(timeInput);
       const converter = new TimeConverter(timeInput);
@@ -82,8 +92,17 @@ export default {
       // 正则表达式匹配日期时间格式
       const datePattern1 = /^\d{4}-\d{2}-\d{2}$/; // yyyy-MM-dd
       const datePattern2 = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/; // yyyy-MM-dd HH:mm:ss
-
-      if (datePattern1.test(input) || datePattern2.test(input)) {
+      const datePattern3 = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}$/; //2024-11-18T09:48:05.492
+      const datePattern4 = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/; //2024-11-18T09:48:05.492z
+      const datePattern5 = new RegExp(
+                            `^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\\s
+                            (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\s
+                            \\d{1,2}\\s
+                            \\d{2}:\\d{2}:\\d{2}\\s
+                            (CST|EST|PST|GMT|UTC|[A-Z]{3})\\s
+                            \\d{4}$`
+                            );
+      if (datePattern1.test(input) || datePattern2.test(input) || datePattern3.test(input) || datePattern4.test(input) || datePattern5.test(input)) {
         // 尝试将字符串转换为 Date 对象并判断是否合法
         const date = new Date(input);
         if (!isNaN(date.getTime())) {

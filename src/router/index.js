@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import HomePage from '../views/HomePage.vue';
 import TimestampConverter from '../components/TimestampConverter.vue';
+import IpInfo from '../components/IpInfo.vue';
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,11 @@ const routes = [
     path: '/timestamp-converter',
     name: 'TimestampConverter',
     component: TimestampConverter,
+  },
+  {
+    path: '/ip',
+    name: 'IpInfo',
+    component: IpInfo,
   },
 ];
 

@@ -1,9 +1,13 @@
 // src/utils/timeConverter.js
 export default class TimeConverter {
     constructor(timestamp13) {
-      this.date = new Date(timestamp13);
+      this.timestamp13 = Number(timestamp13);
+      this.date = new Date(Number(timestamp13));
     }
   
+    GMT8() {
+      return this.date.toString();
+    }
     toUTC() {
       return this.date.toUTCString();
     }
@@ -29,16 +33,17 @@ export default class TimeConverter {
     }
   
     toAllFormats() {
-      return [
-        { label: "本地时间", value: '1' },
-        { label: "UTC时间", value: '2' },
-        { label: "JS时间", value: '3' },
-        { label: "ISO 8601", value: '4' },
-        { label: "RFC 2822", value: '5' },
-        { label: "Timestamp（毫秒）", value: '6' },
-        { label: "Unix timestamp（秒）", value: '7' },
-        { label: "Timestamp HEX", value: '8' }
+      const result = [
+        { label: "本地时间", value: this.GMT8() },
+        { label: "UTC时间", value: this.toUTC() },
+        { label: "ISO 8601", value: this.toISO8601() },
+        { label: "RFC 2822", value: this.toRFC2822() },
+        { label: "Timestamp（毫秒）", value:  this.timestamp13},
+        { label: "Unix timestamp（秒）", value: this.toTimestamp10() },
+        { label: "Timestamp HEX", value: this.toHex() }
       ]
+      console.log(result)
+      return result;
     }
   }
   

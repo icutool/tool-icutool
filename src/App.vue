@@ -8,6 +8,7 @@
       <el-menu :default-active="$route.path" router mode="horizontal" class="menu">
         <el-menu-item index="/">首页</el-menu-item>
         <el-menu-item index="/timestamp-converter">时间戳转换</el-menu-item>
+        <el-menu-item index="/ip">IP信息查询</el-menu-item>
         <el-submenu index="2">
           <template slot="title">网络工具</template>
           <el-menu-item index="/encoding">编码/加密</el-menu-item>
