@@ -7,8 +7,8 @@
                 <button class="execute-button" @click="calculateSchedule">执行</button>
             </div>
 
+            <h3>点击执行显示接下来 7 次的执行时间</h3>
             <div v-if="executionTimes.length" class="results-section">
-                <h3>接下来 7 次的执行时间</h3>
                 <ul>
                     <li v-for="(time, index) in executionTimes" :key="index">{{ time }}</li>
                 </ul>
@@ -16,16 +16,17 @@
 
             <div class="cron-express-section">
                 <h3>Cron 表达式结构</h3>
-                <pre><code>Crontab
-*    *    *    *    *    
--    -    -    -    -    
-|    |    |    |    |    
-|    |    |    |    |    
-|    |    |    |    +----- day of week (0 - 6) (some times Sunday=7)
-|    |    |    +---------- month (1 - 12)
-|    |    +--------------- day of month (1 - 31)
-|    +-------------------- hour (0 - 23)
-+------------------------- min (0 - 59)
+                <pre><code>Crontab 五位和六位cron表达式的区别是秒的区别,五位没有秒,而六位有秒
+*    *    *    *    *    *    
+-    -    -    -    -    -    
+|    |    |    |    |    |    
+|    |    |    |    |    |    
+|    |    |    |    |    +----- 星期几 day of week (0 - 7) (6和7都表示周日)
+|    |    |    |    +---------- 月份 month (1 - 12)
+|    |    |    +--------------- 天数 day of month (1 - 31)
+|    |    +-------------------- 小时 hour (0 - 23)
+|    +------------------------- 分钟 min (0 - 59)
++------------------------------ 秒(可选) sec (0 - 59)
 </code></pre>
             </div>
         </div>
@@ -42,6 +43,10 @@ export default {
     },
     methods: {
         calculateSchedule() {
+            if (!this.cronExpression) {
+                this.$message.warning("请输入Cron表达式！")
+                return;
+            }
             try {
                 const cronParser = require("cron-parser"); // 安装依赖：npm install cron-parser
                 const interval = cronParser.parseExpression(this.cronExpression);
@@ -58,7 +63,8 @@ export default {
                     this.executionTimes.push(formatTime);
                 }
             } catch (error) {
-                alert("无效的Cron表达式，请检查后重试！");
+                this.$message.error("无效的Cron表达式，请检查后重试！")
+                this.cronExpression = ""
             }
         },
     },
@@ -149,7 +155,7 @@ li {
 }
 
 .cron-express-section pre {
-    background: #f1f1f1;
+    background: #f7f7f7;
     padding: 15px;
     border-radius: 5px;
     border: 1px solid #ccc;

@@ -3,7 +3,8 @@ import VueRouter from 'vue-router';
 import HomePage from '../views/HomePage.vue';
 import TimestampConverter from '../components/TimestampConverter.vue';
 import IpInfo from '../components/IpInfo.vue';
-import CronFive from '../components/CronFive.vue';
+import CronExp from '../components/cronGenerate/CronExp.vue';
+import CronGenerate from '../components/cronGenerate/CronGenerate.vue';
 
 Vue.use(VueRouter);
 
@@ -24,9 +25,14 @@ const routes = [
     component: IpInfo,
   },
   {
-    path: '/cron5',
-    name: '5位Cron表达式',
-    component: CronFive,
+    path: '/cron',
+    name: 'Cron表达式',
+    component: CronExp,
+  },
+  {
+    path: '/cronGenerate',
+    name: 'Cron表达式生成',
+    component: CronGenerate,
   },
 ];
 
