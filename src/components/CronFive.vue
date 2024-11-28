@@ -1,21 +1,21 @@
 <template>
     <div id="app">
-        <div class="parent">
-            <div>
+        <div class="container">
+            <div class="input-section">
                 <label for="cron-input">表达式：</label>
                 <input id="cron-input" v-model="cronExpression" placeholder="请输入Cron表达式" />
-                <button @click="calculateSchedule">执行</button>
+                <button class="execute-button" @click="calculateSchedule">执行</button>
             </div>
 
-            <div v-if="executionTimes.length">
-                <h3>接下来7次的执行时间</h3>
+            <div v-if="executionTimes.length" class="results-section">
+                <h3>接下来 7 次的执行时间</h3>
                 <ul>
                     <li v-for="(time, index) in executionTimes" :key="index">{{ time }}</li>
                 </ul>
             </div>
 
-            <div class="cronexpress">
-                <h3>Cron表达式结构</h3>
+            <div class="cron-express-section">
+                <h3>Cron 表达式结构</h3>
                 <pre><code>Crontab
 *    *    *    *    *    
 -    -    -    -    -    
@@ -57,7 +57,6 @@ export default {
                     const formatTime = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
                     this.executionTimes.push(formatTime);
                 }
-                console.log(this.executionTimes);
             } catch (error) {
                 alert("无效的Cron表达式，请检查后重试！");
             }
@@ -66,23 +65,42 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #app {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
     padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-ul {
-    list-style-type: none; /* 去掉默认的列表样式 */
-    padding: 0;           /* 移除默认内边距 */
-    text-align: center;   /* 列表内容水平居中 */
+.container {
+    width: 100%;
+    max-width: 600px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 30px; /* 将容器距离顶部设置为 30px */
 }
 
-li {
-    text-align: center;   /* 列表项文字水平居中 */
-    margin: 5px 0;        /* 每个列表项之间添加间距 */
+.input-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
+input {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
 
 pre {
     background: #f8f8f8;
@@ -92,26 +110,61 @@ pre {
     text-align: justify;
 }
 
-.parent {
-    display: flex;
-    flex-direction: column;
-    /* 内容纵向排列 */
-    align-items: center;
-    /* 水平居中 */
-    gap: 20px;
-    /* 子项之间的间距 */
-    padding-top: 30px;
-    /* 距离顶部 30px */
-    height: 70vh;
-    /* 父容器高度占满视口 */
-    justify-content: flex-start;
-    /* 从顶部开始排列 */
+.execute-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
+.execute-button:hover {
+    background-color: #0056b3;
+}
 
-.cronexpress {
-    margin-top: 0;
-    /* 不再需要额外的顶部间距 */
-    width: 500px;
+.results-section h3 {
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 5px 0;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+.cron-express-section {
+    margin-top: 20px;
+}
+
+.cron-express-section pre {
+    background: #f1f1f1;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    overflow-x: auto;
+}
+
+h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+label {
+    font-weight: bold;
 }
 </style>
