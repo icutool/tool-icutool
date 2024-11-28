@@ -68,13 +68,13 @@ export default {
 <style scoped>
 #app {
     font-family: 'Arial', sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
+
+    color: #706f6f;
     padding: 20px;
-    min-height: 100vh;
+    min-height: 80vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
 }
 
 .container {
@@ -84,7 +84,6 @@ export default {
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 30px; /* 将容器距离顶部设置为 30px */
 }
 
 .input-section {
