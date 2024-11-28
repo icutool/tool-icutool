@@ -20,8 +20,11 @@
         </el-submenu>
       </el-menu>
       <div class="navbar-right">
-        <el-button type="primary" @click="login">登录</el-button>
-        <el-button @click="register">注册</el-button>
+        <!-- <el-button type="primary" @click="login">登录</el-button> -->
+        <!-- <el-button @click="register">注册</el-button> -->
+        <button class="execute-button login-button" @click="login">登录</button>
+        <button class="execute-button register-button" @click="register">注册</button>
+
       </div>
     </header>
     <router-view></router-view>
@@ -128,5 +131,32 @@ export default {
   /* 确保文本行高合适 */
   padding: 0 15px;
   /* 控制按钮内边距 */
+}
+
+.execute-button {
+  background-color: #409eff;
+  color: #fff;
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+.execute-button:first-child {
+  margin-right: 10px;
+  /* 只为第一个按钮添加右边距 */
+}
+
+.login-button {
+  background-color: #409eff; /* 蓝色背景 */
+  border: 1px solid #409eff; /* 灰色边框 */
+}
+
+.register-button {
+  background-color: #ffffff; /* 绿色背景 */
+  color: #000;
+  border: 1px solid #ccc; /* 灰色边框 */
 }
 </style>
