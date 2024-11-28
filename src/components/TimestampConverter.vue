@@ -69,7 +69,8 @@ export default {
           timeInput = new Date(newTime).getTime();
           break;
         default:
-          console.log('error');
+          console.log('未知格式,尝试使用Date处理');
+          timeInput = new Date(newTime).getTime();
           break;
       }
       if (isNaN(timeInput)) {

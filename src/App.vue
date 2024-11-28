@@ -10,6 +10,11 @@
         <el-menu-item index="/timestamp-converter">时间戳转换</el-menu-item>
         <el-menu-item index="/ip">IP信息查询</el-menu-item>
         <el-submenu index="2">
+          <template slot="title">Cron表达式</template>
+          <el-menu-item index="/cron5">5位表达式</el-menu-item>
+          <el-menu-item index="/cron6">6位表达式</el-menu-item>
+        </el-submenu>
+        <el-submenu index="3">
           <template slot="title">网络工具</template>
           <el-menu-item index="/encoding">编码/加密</el-menu-item>
         </el-submenu>
