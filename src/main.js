@@ -11,6 +11,11 @@ Vue.use(VueMeta);
 Vue.config.productionTip = false
 
 new Vue({
-  render: h => h(App),
   router,
-}).$mount('#app')
+  render: function (h) {
+       return h(App)
+  },
+  mounted () {//新增
+         document.dispatchEvent(new Event('render-event'))
+   }
+ }).$mount('#app');
