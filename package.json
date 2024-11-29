@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@dreysolano/prerender-spa-plugin": "^1.0.3",
     "axios": "^1.7.7",
     "core-js": "^3.8.3",
     "cron-parser": "^4.9.0",
