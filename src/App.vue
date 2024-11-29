@@ -28,6 +28,11 @@
       </div>
     </header>
     <router-view></router-view>
+    <footer class="footer">
+      <div class="footer-content">
+        <a href="https://beian.miit.gov.cn/" target="_blank">Copyright © 2019-2024 PB科技 皖ICP备19019230号-3</a>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -158,5 +163,27 @@ export default {
   background-color: #ffffff; /* 绿色背景 */
   color: #000;
   border: 1px solid #ccc; /* 灰色边框 */
+}
+
+.footer {
+  position: fixed; /* 固定在页面底部 */
+  bottom: 10px;    /* 距离底部10px */
+  left: 0;
+  width: 100%;     /* 确保宽度拉满页面 */
+  text-align: center; /* 可选：居中对齐内容 */
+  padding: 10px;  /* 可选：内边距 */
+}
+
+.footer-content a {
+  text-decoration: none;
+  color: #000;
+  font-size: 8%;
+  font-weight: 500;
+  /* 使文字看起来更清晰 */
+  text-align: center;
+  line-height: 0%;
+  /* 确保文本行高合适 */
+  padding: 0 15px;
+  /* 控制按钮内边距 */
 }
 </style>
