@@ -13,7 +13,7 @@ module.exports = defineConfig({
       plugins: [
         new PrerenderSPAPlugin({
           staticDir: path.join(__dirname, './dist'),
-          routes: ['/', '/ip', '/timestamp-converter', '/cron'], // 需要预渲染的路由
+          routes: ['/', '/ip', '/timestamp-converter', '/cron', '/cronGenerate'], // 需要预渲染的路由
           renderer: new Renderer({
             inject: {
               foo: "bar",
