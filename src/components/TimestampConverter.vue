@@ -20,12 +20,12 @@ export default {
     return {
       title: '时间戳转换 - icutool编程工具',
       meta: [
-        { name: 'description', content: 'icutool提供时间戳转换、IP地址查询、编解码工具，专为程序员打造。使用我们的网站，快速进行编程相关任务的工具查询。' },
-        { name: 'keywords', content: '时间戳转换, IP查询, 编解码工具, 程序员工具, 网络工具, 编程工具' },
+        { name: 'description', content: 'icutool提供专业的时间格式转换工具，支持时间戳与标准时间、UTC时间互相转换，快速解决开发中的时间处理问题。' },
+        { name: 'keywords', content: '时间戳转换, 时间格式转换, UTC时间, 标准时间, 编程工具, 程序员工具, icutool' },
         { name: 'author', content: 'icutool' },
         { name: 'robots', content: 'index, follow' },
-        { property: 'og:title', content: 'icutool编程工具 - 时间戳转换、IP查询与编码工具' },
-        { property: 'og:description', content: 'icutool提供时间戳转换、IP地址查询、编解码工具，专为程序员打造。' },
+        { property: 'og:title', content: '时间格式互相转换 - icutool编程工具' },
+        { property: 'og:description', content: '使用icutool的时间格式转换工具，轻松实现时间戳、标准时间、UTC时间之间的互转，提升开发效率。' },
         { property: 'og:type', content: 'website' },
         { property: 'og:url', content: window.location.href }
       ]

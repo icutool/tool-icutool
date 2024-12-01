@@ -39,6 +39,17 @@ export default {
         return {
             cronExpression: "", // 用户输入的Cron表达式
             executionTimes: [], // 计算出的执行时间
+            title: 'Cron表达式解析 - icutool编程工具',
+            meta: [
+                { name: 'description', content: '使用icutool的Cron表达式解析器，轻松生成和解析定时任务表达式，专为程序员打造的实用工具。' },
+                { name: 'keywords', content: 'Cron表达式, Cron解析, Cron生成器, 定时任务表达式, 程序员工具, icutool' },
+                { name: 'author', content: 'icutool' },
+                { name: 'robots', content: 'index, follow' },
+                { property: 'og:title', content: 'Cron表达式解析 - icutool编程工具' },
+                { property: 'og:description', content: '使用icutool的Cron表达式解析器，快速生成和解析Cron表达式，提升开发效率，适合程序员日常使用。' },
+                { property: 'og:type', content: 'website' },
+                { property: 'og:url', content: window.location.href }
+            ]
         };
     },
     methods: {

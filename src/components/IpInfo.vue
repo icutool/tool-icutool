@@ -40,20 +40,20 @@
 import { getIpInfo } from "@/api/request";
 export default {
     metaInfo() {
-    return {
-      title: 'IP查询 - icutool编程工具',
-      meta: [
-        { name: 'description', content: 'icutool提供时间戳转换、IP地址查询、编解码工具，专为程序员打造。使用我们的网站，快速进行编程相关任务的工具查询。' },
-        { name: 'keywords', content: '时间戳转换, IP查询, 编解码工具, 程序员工具, 网络工具, 编程工具' },
-        { name: 'author', content: 'icutool' },
-        { name: 'robots', content: 'index, follow' },
-        { property: 'og:title', content: 'icutool编程工具 - 时间戳转换、IP查询与编码工具' },
-        { property: 'og:description', content: 'icutool提供时间戳转换、IP地址查询、编解码工具，专为程序员打造。' },
-        { property: 'og:type', content: 'website' },
-        { property: 'og:url', content: window.location.href }
-      ]
-    };
-  },
+        return {
+            title: 'IP地址信息解析 - icutool编程工具',
+            meta: [
+                { name: 'description', content: '使用icutool的IP地址解析工具，快速查询IP所在地理位置、ISP信息和网络详情，助力程序员和网络工程师高效工作。' },
+                { name: 'keywords', content: 'IP地址查询, IP解析, 地理位置查询, 网络工具, 程序员工具, icutool' },
+                { name: 'author', content: 'icutool' },
+                { name: 'robots', content: 'index, follow' },
+                { property: 'og:title', content: 'IP地址信息解析 - icutool编程工具' },
+                { property: 'og:description', content: '使用icutool的IP地址信息解析工具，精准查询IP详情，适合程序员、网络工程师和数据分析。' },
+                { property: 'og:type', content: 'website' },
+                { property: 'og:url', content: window.location.href }
+            ]
+        };
+    },
     data() {
         return {
             ipAddress: "", // 用户输入的IP地址

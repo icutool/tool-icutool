@@ -4,7 +4,7 @@
     <div class="container">
       <div class="tab">
         <h2>选择 Cron 表达式的时间规则</h2>
-        <el-tabs v-model="activeTab" value='second' type="card">
+        <el-tabs v-model="activeTab" value='second' type="card" class="custom-tabs">
           <!-- second Selection -->
           <el-tab-pane label="秒钟" name="second">
             <div>
@@ -306,6 +306,12 @@
                   每周执行
                 </label>
               </div>
+              <div>
+                <label class="left-align">
+                  <input type="radio" v-model="weekdayMode" value='?' @click="() => cancleSelectMode('?')" />
+                  不指定
+                </label>
+              </div>
 
               <div>
                 <label class="left-align">
@@ -356,7 +362,7 @@
         </el-tabs>
       </div>
       <div class="input-group">
-        <button @click="generateCronExpression">生成 Cron 表达式</button>
+        <button class='execute-button' @click="generateCronExpression">生成 Cron 表达式</button>
       </div>
       <!-- CronResult Component -->
       <div class="cron-result">
@@ -374,7 +380,7 @@
 export default {
   data() {
     return {
-      activeTab: 'day',
+      activeTab: 'weekday',
       secend: '*',
       minute: '*',
       hour: '*',
@@ -441,15 +447,26 @@ export default {
       dayNumberRows: [
         ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'],
         ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22'],
-        ['22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+        ['23', '24', '25', '26', '27', '28', '29', '30', '31'],
       ],
       weekdayNumberRows: [
-        ['01', '02', '03', '04', '05', '06'],
+        ['0', '1', '2', '3', '4', '5', '6'],
       ],
       monthNumberRows: [
         ['01', '02', '03', '04', '05', '06'],
         ['07', '08', '09', '10', '11', '12'],
       ],
+      title: 'Cron表达式可视化生成 - icutool编程工具',
+      meta: [
+        { name: 'description', content: 'icutool提供Cron表达式可视化生成工具，简单拖拽生成复杂的定时任务表达式，专为程序员打造的高效开发工具。' },
+        { name: 'keywords', content: 'Cron表达式生成, Cron可视化, 定时任务工具, Cron生成器, 程序员工具, icutool' },
+        { name: 'author', content: 'icutool' },
+        { name: 'robots', content: 'index, follow' },
+        { property: 'og:title', content: 'Cron表达式可视化生成 - icutool编程工具' },
+        { property: 'og:description', content: '使用icutool的Cron表达式可视化生成工具，快速生成复杂的Cron表达式，提升效率，专为程序员设计。' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:url', content: window.location.href }
+      ]
     };
   },
   methods: {
@@ -467,6 +484,10 @@ export default {
         this.hourSelectedNumbers = [];
       } else if (this.activeTab == 'day') {
         this.daySelectedNumbers = [];
+      } else if (this.activeTab == 'month') {
+        this.monthSelectedNumbers = [];
+      } else if (this.activeTab == 'weekday') {
+        this.weekdayNumberRows = [];
       }
       this.updateTimeValue(modeVlue);
     },
@@ -482,16 +503,24 @@ export default {
           value = `${this.hourRangeStart}-${this.hourRangeEnd}`;
         } else if (this.activeTab == 'day') {
           value = `${this.dayRangeStart}-${this.dayRangeEnd}`;
+        } else if (this.activeTab == 'month') {
+          value = `${this.monthRangeStart}-${this.monthRangeEnd}`;
+        } else if (this.activeTab == 'weekday') {
+          value = `${this.weekdayRangeStart}-${this.weekdayRangeEnd}`;
         }
       } else if (modeVlue == 'step') {
         if (this.activeTab == 'second') {
-          value = `${this.secondStepStart}-${this.secondStepInterval}`;
+          value = `${this.secondStepStart}/${this.secondStepInterval}`;
         } else if (this.activeTab == 'minute') {
           value = `${this.minuteStepStart}/${this.minuteStepInterval}`;
         } else if (this.activeTab == 'hour') {
-          value = `${this.hourStepStart}-${this.hourStepInterval}`;
+          value = `${this.hourStepStart}/${this.hourStepInterval}`;
         } else if (this.activeTab == 'day') {
-          value = `${this.dayStepStart}-${this.dayStepInterval}`;
+          value = `${this.dayStepStart}/${this.dayStepInterval}`;
+        } else if (this.activeTab == 'month') {
+          value = `${this.monthStepStart}/${this.monthStepInterval}`;
+        } else if (this.activeTab == 'weekday') {
+          value = `${this.weekdayStepStart}/${this.weekdayStepInterval}`;
         }
       } else if (modeVlue == 'custom') {
         if (this.activeTab == 'second') {
@@ -502,6 +531,10 @@ export default {
           value = this.hourSelectedNumbers.map(num => String(parseInt(num))).join(',');
         } else if (this.activeTab == 'day') {
           value = this.daySelectedNumbers.map(num => String(parseInt(num))).join(',');
+        } else if (this.activeTab == 'month') {
+          value = this.monthSelectedNumbers.map(num => String(parseInt(num))).join(',');
+        } else if (this.activeTab == 'weekday') {
+          value = this.weekdaySelectedNumbers.map(num => String(parseInt(num))).join(',');
         }
       } else if (modeVlue == '?') {
         value = '?'
@@ -529,6 +562,16 @@ export default {
         this.day = value;
         if (this.dayMode != modeVlue) {
           this.dayMode = modeVlue;
+        }
+      } else if (this.activeTab == 'month') {
+        this.month = value;
+        if (this.monthMode != modeVlue) {
+          this.monthMode = modeVlue;
+        }
+      } else if (this.activeTab == 'weekday') {
+        this.weekday = value;
+        if (this.weekdayMode != modeVlue) {
+          this.weekdayMode = modeVlue;
         }
       }
     },
@@ -616,5 +659,16 @@ export default {
   /* 确保宽度包括内边距和边框 */
   text-align: center;
   display: flex;
+}
+
+.execute-button {
+  background-color: #0a7234;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 </style>
