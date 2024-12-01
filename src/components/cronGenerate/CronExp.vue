@@ -35,10 +35,8 @@
 
 <script>
 export default {
-    data() {
+    metaInfo() {
         return {
-            cronExpression: "", // 用户输入的Cron表达式
-            executionTimes: [], // 计算出的执行时间
             title: 'Cron表达式解析 - icutool编程工具',
             meta: [
                 { name: 'description', content: '使用icutool的Cron表达式解析器，轻松生成和解析定时任务表达式，专为程序员打造的实用工具。' },
@@ -50,6 +48,12 @@ export default {
                 { property: 'og:type', content: 'website' },
                 { property: 'og:url', content: window.location.href }
             ]
+        };
+    },
+    data() {
+        return {
+            cronExpression: "", // 用户输入的Cron表达式
+            executionTimes: [], // 计算出的执行时间
         };
     },
     methods: {

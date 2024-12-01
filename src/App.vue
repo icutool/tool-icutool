@@ -20,14 +20,23 @@
         </el-submenu>
       </el-menu>
       <div class="navbar-right">
-        <!-- <el-button type="primary" @click="login">登录</el-button> -->
-        <!-- <el-button @click="register">注册</el-button> -->
         <button class="execute-button login-button" @click="login">登录</button>
         <button class="execute-button register-button" @click="register">注册</button>
 
       </div>
     </header>
     <router-view></router-view>
+    <!-- 右下角反馈图标 -->
+    <el-button class="feedback-icon" icon="el-icon-message" @click="showDialog = true">反馈</el-button>
+
+    <!-- 反馈弹窗 -->
+    <el-dialog :visible.sync="showDialog" title="提交反馈" width="400px">
+      <el-input v-model="feedback" type="textarea" placeholder="请输入您的反馈" rows="6"></el-input>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="cancelFeedback">取消</el-button>
+        <el-button type="primary" @click="submitFeedback">提交</el-button>
+      </span>
+    </el-dialog>
     <footer class="footer">
       <div class="footer-content">
         <a href="https://beian.miit.gov.cn/" target="_blank">Copyright © 2019-2024 PB科技 皖ICP备19019230号-3</a>
@@ -54,12 +63,32 @@ export default {
       ]
     };
   },
+  data() {
+    return {
+      showDialog: false,  // 控制弹窗显示
+      feedback: '',  // 存储反馈内容
+    };
+  },
   methods: {
     login() {
       this.$router.push('/login');
     },
     register() {
       this.$router.push('/register');
+    },
+    submitFeedback() {
+      if (this.feedback.trim() === '') {
+        this.$message.warning('请输入反馈内容');
+        return;
+      }
+      // 这里可以发送请求到后台保存反馈
+      console.log('提交反馈:', this.feedback);
+      this.showDialog = false;
+      this.$message.success('反馈提交成功');
+    },
+    // 取消反馈
+    cancelFeedback() {
+      this.showDialog = false;
     }
   }
 };
@@ -155,23 +184,32 @@ export default {
 }
 
 .login-button {
-  background-color: #409eff; /* 蓝色背景 */
-  border: 1px solid #409eff; /* 灰色边框 */
+  background-color: #409eff;
+  /* 蓝色背景 */
+  border: 1px solid #409eff;
+  /* 灰色边框 */
 }
 
 .register-button {
-  background-color: #ffffff; /* 绿色背景 */
+  background-color: #ffffff;
+  /* 绿色背景 */
   color: #000;
-  border: 1px solid #ccc; /* 灰色边框 */
+  border: 1px solid #ccc;
+  /* 灰色边框 */
 }
 
 .footer {
-  position: fixed; /* 固定在页面底部 */
-  bottom: 10px;    /* 距离底部10px */
+  position: fixed;
+  /* 固定在页面底部 */
+  bottom: 10px;
+  /* 距离底部10px */
   left: 0;
-  width: 100%;     /* 确保宽度拉满页面 */
-  text-align: center; /* 可选：居中对齐内容 */
-  padding: 10px;  /* 可选：内边距 */
+  width: 100%;
+  /* 确保宽度拉满页面 */
+  text-align: center;
+  /* 可选：居中对齐内容 */
+  padding: 10px;
+  /* 可选：内边距 */
 }
 
 .footer-content a {
@@ -186,4 +224,27 @@ export default {
   padding: 0 15px;
   /* 控制按钮内边距 */
 }
+
+.feedback-icon {
+  display: flex;               /* 使用flex布局 */
+  align-items: center;         /* 垂直居中 */
+  justify-content: center;     /* 水平居中 */
+  background-color: #ff9900;
+  color: #fff;
+  font-size: 14px;
+  padding: 10px 20px;          /* 调整按钮的内边距 */
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 5px;          /* 保持圆角 */
+  width: 80px;                /* 设置固定宽度 */
+  height: 40px;                /* 设置固定高度 */
+  text-align: center;          /* 确保文字居中 */
+  z-index: 9999;               /* 设置较高的z-index，确保在最顶层 */
+}
+
+
+
 </style>

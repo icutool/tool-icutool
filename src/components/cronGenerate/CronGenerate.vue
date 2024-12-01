@@ -378,6 +378,21 @@
 <script>
 
 export default {
+  metaInfo() {
+    return {
+      title: 'Cron表达式可视化生成 - icutool编程工具',
+      meta: [
+        { name: 'description', content: 'icutool提供Cron表达式可视化生成工具，简单拖拽生成复杂的定时任务表达式，专为程序员打造的高效开发工具。' },
+        { name: 'keywords', content: 'Cron表达式生成, Cron可视化, 定时任务工具, Cron生成器, 程序员工具, icutool' },
+        { name: 'author', content: 'icutool' },
+        { name: 'robots', content: 'index, follow' },
+        { property: 'og:title', content: 'Cron表达式可视化生成 - icutool编程工具' },
+        { property: 'og:description', content: '使用icutool的Cron表达式可视化生成工具，快速生成复杂的Cron表达式，提升效率，专为程序员设计。' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:url', content: window.location.href }
+      ]
+    };
+  },
   data() {
     return {
       activeTab: 'weekday',
@@ -456,17 +471,6 @@ export default {
         ['01', '02', '03', '04', '05', '06'],
         ['07', '08', '09', '10', '11', '12'],
       ],
-      title: 'Cron表达式可视化生成 - icutool编程工具',
-      meta: [
-        { name: 'description', content: 'icutool提供Cron表达式可视化生成工具，简单拖拽生成复杂的定时任务表达式，专为程序员打造的高效开发工具。' },
-        { name: 'keywords', content: 'Cron表达式生成, Cron可视化, 定时任务工具, Cron生成器, 程序员工具, icutool' },
-        { name: 'author', content: 'icutool' },
-        { name: 'robots', content: 'index, follow' },
-        { property: 'og:title', content: 'Cron表达式可视化生成 - icutool编程工具' },
-        { property: 'og:description', content: '使用icutool的Cron表达式可视化生成工具，快速生成复杂的Cron表达式，提升效率，专为程序员设计。' },
-        { property: 'og:type', content: 'website' },
-        { property: 'og:url', content: window.location.href }
-      ]
     };
   },
   methods: {
