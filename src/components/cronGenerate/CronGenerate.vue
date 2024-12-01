@@ -177,18 +177,181 @@
           </el-tab-pane>
 
           <!-- Day Selection -->
-          <el-tab-pane label="日期" name="day">
-            <!-- <cron-unit v-model="day" :unitRange="31" /> -->
+          <el-tab-pane label="日" name="day">
+            <div>
+              <div>
+                <label class="left-align">
+                  <input type="radio" v-model="dayMode" value='every' @click="() => cancleSelectMode('every')" />
+                  每日执行
+                </label>
+              </div>
+
+              <div>
+                <label class="left-align">
+                  <input type="radio" v-model="dayMode" value='?' @click="() => cancleSelectMode('?')" />
+                  不指定
+                </label>
+              </div>
+
+              <div>
+                <label class="left-align">
+                  <input type="radio" v-model="dayMode" value="range" @click="() => cancleSelectMode('range')" />
+                  周期性执行 从
+                  <div style="display: inline-block;">
+                    <input type="number" v-model.number="dayRangeStart" @input="() => updateTimeValue('range')"
+                      @focus="() => updateTimeValue('range')" min="1" :max="31" placeholder="起始日" />
+                    到
+                    <input type="number" v-model.number="dayRangeEnd" @input="() => updateTimeValue('range')"
+                      @focus="() => updateTimeValue('range')" min="1" :max="31" placeholder="结束日" />
+                    日
+                  </div>
+                </label>
+              </div>
+
+              <div>
+                <label class="left-align">
+                  <input type="radio" v-model="dayMode" value="step" @click="() => cancleSelectMode('step')" /> 从
+                  <div style="display: inline-block;">
+                    <input type="number" v-model.number="dayStepStart" @input="() => updateTimeValue('step')"
+                      @focus="() => updateTimeValue('step')" min="1" :max="31" />
+                    日开始, 每
+                    <input type="number" v-model.number="dayStepInterval" @input="() => updateTimeValue('step')"
+                      @focus="() => updateTimeValue('step')" min="1" :max="31" />
+                    天执行一次
+                  </div>
+                </label>
+              </div>
+
+              <div>
+                <label class="left-align">
+                  <input type="radio" v-model="dayMode" value="custom" @click="() => cancleSelectMode('custom')" />
+                  指定日期(可多选)
+                  <div class="numbers">
+                    <div v-for="(row, index) in dayNumberRows" :key="index" class="row">
+                      <label v-for="number in row" :key="number" class="number"
+                        @change="() => updateTimeValue('custom')">
+                        <input type="checkbox" :value="number" v-model="daySelectedNumbers" />
+                        {{ number }}
+                      </label>
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
           </el-tab-pane>
 
           <!-- Month Selection -->
           <el-tab-pane label="月份" name="month">
-            <!-- <cron-unit v-model="month" :unitRange="12" /> -->
+            <div>
+              <div>
+                <label class="left-align">
+                  <input type="radio" v-model="monthMode" value='every' @click="() => cancleSelectMode('every')" />
+                  每月执行
+                </label>
+              </div>
+
+              <div>
+                <label class="left-align">
+                  <input type="radio" v-model="monthMode" value="range" @click="() => cancleSelectMode('range')" />
+                  周期性执行 从
+                  <div style="display: inline-block;">
+                    <input type="number" v-model.number="monthRangeStart" @input="() => updateTimeValue('range')"
+                      @focus="() => updateTimeValue('range')" min="1" :max="12" placeholder="起始月" />
+                    到
+                    <input type="number" v-model.number="monthRangeEnd" @input="() => updateTimeValue('range')"
+                      @focus="() => updateTimeValue('range')" min="1" :max="12" placeholder="结束月" />
+                    月
+                  </div>
+                </label>
+              </div>
+
+              <div>
+                <label class="left-align">
+                  <input type="radio" v-model="monthMode" value="step" @click="() => cancleSelectMode('step')" /> 从
+                  <div style="display: inline-block;">
+                    <input type="number" v-model.number="monthStepStart" @input="() => updateTimeValue('step')"
+                      @focus="() => updateTimeValue('step')" min="1" :max="12" />
+                    月开始, 每
+                    <input type="number" v-model.number="monthStepInterval" @input="() => updateTimeValue('step')"
+                      @focus="() => updateTimeValue('step')" min="1" :max="12" />
+                    月执行一次
+                  </div>
+                </label>
+              </div>
+
+              <div>
+                <label class="left-align">
+                  <input type="radio" v-model="monthMode" value="custom" @click="() => cancleSelectMode('custom')" />
+                  指定月份(可多选)
+                  <div class="numbers">
+                    <div v-for="(row, index) in monthNumberRows" :key="index" class="row">
+                      <label v-for="number in row" :key="number" class="number"
+                        @change="() => updateTimeValue('custom')">
+                        <input type="checkbox" :value="number" v-model="monthSelectedNumbers" />
+                        {{ number }}
+                      </label>
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
           </el-tab-pane>
 
-          <!-- Day of Week Selection -->
+          <!-- Weekday of Week Selection -->
           <el-tab-pane label="星期" name="weekday">
-            <!-- <cron-unit v-model="weekday" :unitRange="7" :customLabels="['周日', '周一', '周二', '周三', '周四', '周五', '周六']" /> -->
+            <div>
+              <div>
+                <label class="left-align">
+                  <input type="radio" v-model="weekdayMode" value='every' @click="() => cancleSelectMode('every')" />
+                  每周执行
+                </label>
+              </div>
+
+              <div>
+                <label class="left-align">
+                  <input type="radio" v-model="weekdayMode" value="range" @click="() => cancleSelectMode('range')" />
+                  周期性执行 从
+                  <div style="display: inline-block;">
+                    <input type="number" v-model.number="weekdayRangeStart" @input="() => updateTimeValue('range')"
+                      @focus="() => updateTimeValue('range')" min="0" :max="6" placeholder="起始星期" />
+                    到
+                    <input type="number" v-model.number="weekdayRangeEnd" @input="() => updateTimeValue('range')"
+                      @focus="() => updateTimeValue('range')" min="0" :max="6" placeholder="结束星期" />
+                    (0 代表周日)
+                  </div>
+                </label>
+              </div>
+
+              <div>
+                <label class="left-align">
+                  <input type="radio" v-model="weekdayMode" value="step" @click="() => cancleSelectMode('step')" /> 从
+                  <div style="display: inline-block;">
+                    <input type="number" v-model.number="weekdayStepStart" @input="() => updateTimeValue('step')"
+                      @focus="() => updateTimeValue('step')" min="0" :max="6" />
+                    开始, 每
+                    <input type="number" v-model.number="weekdayStepInterval" @input="() => updateTimeValue('step')"
+                      @focus="() => updateTimeValue('step')" min="1" :max="6" />
+                    天执行一次
+                  </div>
+                </label>
+              </div>
+
+              <div>
+                <label class="left-align">
+                  <input type="radio" v-model="weekdayMode" value="custom" @click="() => cancleSelectMode('custom')" />
+                  指定星期(可多选)
+                  <div class="numbers">
+                    <div v-for="(row, index) in weekdayNumberRows" :key="index" class="row">
+                      <label v-for="number in row" :key="number" class="number"
+                        @change="() => updateTimeValue('custom')">
+                        <input type="checkbox" :value="number" v-model="weekdaySelectedNumbers" />
+                        {{ number }}
+                      </label>
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -211,7 +374,7 @@
 export default {
   data() {
     return {
-      activeTab: 'second',
+      activeTab: 'day',
       secend: '*',
       minute: '*',
       hour: '*',
@@ -225,26 +388,44 @@ export default {
       secondMode: 'every',
       minuteMode: 'every',
       hourMode: 'every',
+      dayMode: 'every',
+      monthMode: 'every',
+      weekdayMode: 'every',
 
       secondRangeStart: 0,
       minuteRangeStart: 0,
       hourRangeStart: 0,
+      dayRangeStart: 1,
+      monthRangeStart: 1,
+      weekdayRangeStart: 0,
 
       secondRangeEnd: 59,
       minuteRangeEnd: 59,
       hourRangeEnd: 23,
+      dayRangeEnd: 31,
+      monthRangeEnd: 12,
+      weekdayRangeEnd: 6,
 
       secondStepStart: 0,
       minuteStepStart: 0,
       hourStepStart: 0,
+      dayStepStart: 1,
+      monthStepStart: 1,
+      weekdayStepStart: 0,
 
       minuteStepInterval: 1,
       secondStepInterval: 1,
       hourStepInterval: 1,
+      dayStepInterval: 1,
+      monthStepInterval: 1,
+      weekdayStepInterval: 1,
 
       secondSelectedNumbers: [],
       minuteSelectedNumbers: [],
       hourSelectedNumbers: [],
+      daySelectedNumbers: [],
+      monthSelectedNumbers: [],
+      weekdaySelectedNumbers: [],
       numberRows: [
         ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09'],
         ['10', '11', '12', '13', '14', '15', '16', '17', '18', '19'],
@@ -256,6 +437,18 @@ export default {
       hourNumberRows: [
         ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'],
         ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
+      ],
+      dayNumberRows: [
+        ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'],
+        ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22'],
+        ['22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+      ],
+      weekdayNumberRows: [
+        ['01', '02', '03', '04', '05', '06'],
+      ],
+      monthNumberRows: [
+        ['01', '02', '03', '04', '05', '06'],
+        ['07', '08', '09', '10', '11', '12'],
       ],
     };
   },
@@ -272,52 +465,70 @@ export default {
         this.minuteSelectedNumbers = [];
       } else if (this.activeTab == 'hour') {
         this.hourSelectedNumbers = [];
+      } else if (this.activeTab == 'day') {
+        this.daySelectedNumbers = [];
       }
       this.updateTimeValue(modeVlue);
     },
     updateTimeValue(modeVlue) {
-      if (this.activeTab == 'second' || this.activeTab == 'minute' || this.activeTab == 'hour') {
-        var value;
-        if (modeVlue == 'range') {
-          if (this.activeTab == 'second') {
-            value = `${this.secondRangeStart}-${this.secondRangeEnd}`;
-          } else if (this.activeTab == 'minute') {
-            value = `${this.minuteRangeStart}-${this.minuteRangeEnd}`;
-          } else if (this.activeTab == 'hour') {
-            value = `${this.hourRangeStart}-${this.hourRangeEnd}`;
-          }
-        } else if (modeVlue == 'step') {
-          if (this.activeTab == 'second') {
-            value = `${this.secondStepStart}-${this.secondStepInterval}`;
-          } else if (this.activeTab == 'minute') {
-            value = `${this.minuteStepStart}/${this.minuteStepInterval}`;
-          } else if (this.activeTab == 'hour') {
-            value = `${this.hourStepStart}-${this.hourStepInterval}`;
-          }
-        } else if (modeVlue == 'custom') {
-          if (this.activeTab == 'second') {
-            value = this.secondSelectedNumbers.map(num => String(parseInt(num))).join(',');
-          } else if (this.activeTab == 'minute') {
-            value = this.minuteSelectedNumbers.map(num => String(parseInt(num))).join(',');
-          } else if (this.activeTab == 'hour') {
-            value = this.hourSelectedNumbers.map(num => String(parseInt(num))).join(',');
-          }
-        }
+      var value;
+      console.log(modeVlue)
+      if (modeVlue == 'range') {
         if (this.activeTab == 'second') {
-          this.secend = value;
-          if (this.secondMode != modeVlue) {
-            this.secondMode = modeVlue;
-          }
+          value = `${this.secondRangeStart}-${this.secondRangeEnd}`;
         } else if (this.activeTab == 'minute') {
-          this.minute = value;
-          if (this.minuteMode != modeVlue) {
-            this.minuteMode = modeVlue;
-          }
+          value = `${this.minuteRangeStart}-${this.minuteRangeEnd}`;
         } else if (this.activeTab == 'hour') {
-          this.hour = value;
-          if (this.hourMode != modeVlue) {
-            this.hourMode = modeVlue;
-          }
+          value = `${this.hourRangeStart}-${this.hourRangeEnd}`;
+        } else if (this.activeTab == 'day') {
+          value = `${this.dayRangeStart}-${this.dayRangeEnd}`;
+        }
+      } else if (modeVlue == 'step') {
+        if (this.activeTab == 'second') {
+          value = `${this.secondStepStart}-${this.secondStepInterval}`;
+        } else if (this.activeTab == 'minute') {
+          value = `${this.minuteStepStart}/${this.minuteStepInterval}`;
+        } else if (this.activeTab == 'hour') {
+          value = `${this.hourStepStart}-${this.hourStepInterval}`;
+        } else if (this.activeTab == 'day') {
+          value = `${this.dayStepStart}-${this.dayStepInterval}`;
+        }
+      } else if (modeVlue == 'custom') {
+        if (this.activeTab == 'second') {
+          value = this.secondSelectedNumbers.map(num => String(parseInt(num))).join(',');
+        } else if (this.activeTab == 'minute') {
+          value = this.minuteSelectedNumbers.map(num => String(parseInt(num))).join(',');
+        } else if (this.activeTab == 'hour') {
+          value = this.hourSelectedNumbers.map(num => String(parseInt(num))).join(',');
+        } else if (this.activeTab == 'day') {
+          value = this.daySelectedNumbers.map(num => String(parseInt(num))).join(',');
+        }
+      } else if (modeVlue == '?') {
+        value = '?'
+      } else if (modeVlue == 'every') {
+        value = '*'
+      }
+
+
+      if (this.activeTab == 'second') {
+        this.secend = value;
+        if (this.secondMode != modeVlue) {
+          this.secondMode = modeVlue;
+        }
+      } else if (this.activeTab == 'minute') {
+        this.minute = value;
+        if (this.minuteMode != modeVlue) {
+          this.minuteMode = modeVlue;
+        }
+      } else if (this.activeTab == 'hour') {
+        this.hour = value;
+        if (this.hourMode != modeVlue) {
+          this.hourMode = modeVlue;
+        }
+      } else if (this.activeTab == 'day') {
+        this.day = value;
+        if (this.dayMode != modeVlue) {
+          this.dayMode = modeVlue;
         }
       }
     },
