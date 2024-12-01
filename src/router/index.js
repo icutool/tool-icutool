@@ -5,6 +5,7 @@ import TimestampConverter from '../components/TimestampConverter.vue';
 import IpInfo from '../components/IpInfo.vue';
 import CronExp from '../components/cronGenerate/CronExp.vue';
 import CronGenerate from '../components/cronGenerate/CronGenerate.vue';
+import cronTest from '../components/cronGenerate/cronTest.vue';
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/cronGenerate',
     name: 'Cron表达式生成',
     component: CronGenerate,
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: cronTest,
   },
 ];
 

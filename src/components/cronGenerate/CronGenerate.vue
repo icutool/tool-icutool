@@ -46,13 +46,13 @@
 
               <div>
                 <label class="left-align">
-                  <!-- <input type="radio" v-model="secondMode" value="custom" @click="() => cancleSelectMode('custom')" /> -->
-                  <input type="radio" v-model="secondMode" value="custom" />
+                  <input type="radio" v-model="secondMode" value="custom" @click="() => cancleSelectMode('custom')" />
                   指定秒数(可多选)
                   <div class="numbers">
                     <div v-for="(row, index) in numberRows" :key="index" class="row">
-                      <label v-for="number in row" :key="number" class="number">
-                        <input type="checkbox" :value="number" v-model="selectedNumbers"  @change="updateMinuteValue('custom')" />
+                      <label v-for="number in row" :key="number" class="number"
+                        @change="() => updateMinuteValue('custom')">
+                        <input type="checkbox" :value="number" v-model="selectedNumbers" />
                         {{ number }}
                       </label>
                     </div>
@@ -64,56 +64,7 @@
 
           <!-- Minute Selection -->
           <el-tab-pane label="分钟" name="minute">
-            <div>
-              <div>
-                <label class="left-align">
-                  <input type="radio" v-model="minuteMode" value='every' @click="cancleSelectMode" /> 每秒执行
-                </label>
-              </div>
 
-              <div>
-                <label class="left-align">
-                  <input type="radio" v-model="minuteMode" value="range" @click="cancleSelectMode" />
-                  周期性执行 从
-                  <div style="display: inline-block;">
-                    <input type="number" v-model.number="minuteRangeStart" @input="() => updateMinuteValue('range')"
-                      @focus="() => updateMinuteValue('range')" min="0" :max="unitRange" placeholder="起始秒" />
-                    到
-                    <input type="number" v-model.number="minuteRangeEnd" @input="() => updateMinuteValue('range')"
-                      @focus="() => updateMinuteValue('range')" min="0" :max="unitRange" placeholder="结束秒" />
-                    秒 (每秒执行)
-                  </div>
-                </label>
-              </div>
-
-              <div>
-                <label class="left-align">
-                  <input type="radio" v-model="minuteMode" value="step" @click="cancleSelectMode" /> 从
-                  <div style="display: inline-block;">
-                    <input type="number" v-model.number="minuteStepStart" @input="() => updateMinuteValue('step')"
-                      @focus="() => updateMinuteValue('step')" min="0" :max="unitRange" />
-                    秒开始, 每
-                    <input type="number" v-model.number="minuteStepInterval" @input="() => updateMinuteValue('step')"
-                      @focus="() => updateMinuteValue('step')" min="1" :max="unitRange" />
-                    秒执行一次
-                  </div>
-                </label>
-              </div>
-
-              <div>
-                <label class="left-align">
-                  <input type="radio" v-model="minuteMode" value="custom" @click="cancleSelectMode" /> 指定秒数(可多选)
-                  <div class="numbers">
-                    <div v-for="(row, index) in numberRows" :key="index" class="row">
-                      <label v-for="number in row" :key="number" class="number" >
-                        <input type="checkbox" :value="number" v-model="selectedNumbers" @click="updateMinuteValue('custom')" />
-                        {{ number }}
-                      </label>
-                    </div>
-                  </div>
-                </label>
-              </div>
-            </div>
           </el-tab-pane>
 
           <!-- Hour Selection -->
@@ -156,7 +107,7 @@
 export default {
   data() {
     return {
-      activeTab: 'minute',
+      activeTab: 'second',
       secend: '*',
       minute: '*',
       hour: '*',
@@ -196,36 +147,28 @@ export default {
       console.log(this.activeTab);
     },
     updateMinuteValue(modeVlue) {
-      this.$nextTick(() => {
-        console.log(this.selectedNumbers);
-        console.log(modeVlue);
-      });
-      
-      // this.$nextTick(() => {
-      //   // 动态组合值并赋值给 minuteMode
-      // if (this.activeTab == 'second' || this.activeTab == 'minute') {
-      //     var value;
-      //     if (modeVlue == 'range') {
-      //       value = `${this.minuteRangeStart}-${this.minuteRangeEnd}`;
-      //     } else if (modeVlue == 'step') {
-      //       value = `${this.minuteStepStart}/${this.minuteStepInterval}`;
-      //     } else if (modeVlue == 'custom') {
-      //       console.log(this.selectedNumbers);
-      //       value = this.selectedNumbers.join(',');
-      //     }
-      //     if (this.activeTab == 'second') {
-      //       this.secend = value;
-      //     } else if (this.activeTab == 'minute') {
-      //       this.minute = value;
-      //     }
-      //   }
-      //   if (this.minuteMode != modeVlue) {
-      //     this.minuteMode = modeVlue;
-      //     console.log(this.minuteMode);
-      //   }
-      // });
-      
-
+      if (this.activeTab == 'second' || this.activeTab == 'minute') {
+        var value;
+        if (modeVlue == 'range') {
+          value = `${this.minuteRangeStart}-${this.minuteRangeEnd}`;
+        } else if (modeVlue == 'step') {
+          value = `${this.minuteStepStart}/${this.minuteStepInterval}`;
+        } else if (modeVlue == 'custom') {
+          console.log(this.selectedNumbers);
+          value = this.selectedNumbers.map(num => String(parseInt(num))).join(',');
+        }
+        if (this.activeTab == 'second') {
+          this.secend = value;
+          if (this.secondMode != modeVlue) {
+            this.secondMode = modeVlue;
+          }
+        } else if (this.activeTab == 'minute') {
+          this.minute = value;
+          if (this.minuteMode != modeVlue) {
+            this.minuteMode = modeVlue;
+          }
+        }
+      }
     },
   },
 };
