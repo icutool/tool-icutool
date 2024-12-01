@@ -27,10 +27,21 @@
     </header>
     <router-view></router-view>
     <!-- 右下角反馈图标 -->
-    <el-button class="feedback-icon" icon="el-icon-message" @click="showDialog = true">反馈</el-button>
+    <div class="feedback-container">
+      <div class="feedback-icon" @click="showDialog = true">
+        <i class="el-icon-message"></i>
+      </div>
+      <div class="tooltip">反馈</div>
+    </div>
 
     <!-- 反馈弹窗 -->
     <el-dialog :visible.sync="showDialog" title="提交反馈" width="400px">
+      <el-radio-group v-model="feedbackType">
+        <el-radio label="0">BUG</el-radio>
+        <el-radio label="1">建议</el-radio>
+        <el-radio label="2">其他</el-radio>
+      </el-radio-group>
+      <el-input v-model="email" type="textarea" placeholder="联系邮箱📮" rows="1" @blur="validateEmail"></el-input>
       <el-input v-model="feedback" type="textarea" placeholder="请输入您的反馈" rows="6"></el-input>
       <span slot="footer" class="dialog-footer">
         <el-button @click="cancelFeedback">取消</el-button>
@@ -46,6 +57,7 @@
 </template>
 
 <script>
+import { feedback } from "@/api/request";
 export default {
   name: 'App',
   metaInfo() {
@@ -67,9 +79,18 @@ export default {
     return {
       showDialog: false,  // 控制弹窗显示
       feedback: '',  // 存储反馈内容
+      feedbackType: '0',
+      email: '',
     };
   },
   methods: {
+    validateEmail() {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (this.email && !emailRegex.test(this.email)) {
+        this.$message.warning('请输入有效的邮箱地址');
+        this.email = '';
+      }
+    },
     login() {
       this.$router.push('/login');
     },
@@ -83,8 +104,20 @@ export default {
       }
       // 这里可以发送请求到后台保存反馈
       console.log('提交反馈:', this.feedback);
+      feedback({ feedbackText: this.feedback, feedbackType: this.feedbackType, productType: 'tools', email: this.email }).then(res => {
+        if (res.data.code == 200) {
+          this.$message.success('反馈成功，感谢您的支持！');
+          this.feedback = '';
+          this.email = '';
+        } else {
+          console.log(res.msg);
+          this.$message.error(res.data.message || "提交反馈失败,可直接联系QQ:599653466");
+        }
+      }).catch(error => {
+        console.log(error.msg || error.message);
+        this.$message.error("网络异常，请稍后再试！");
+      });
       this.showDialog = false;
-      this.$message.success('反馈提交成功');
     },
     // 取消反馈
     cancelFeedback() {
@@ -225,26 +258,75 @@ export default {
   /* 控制按钮内边距 */
 }
 
-.feedback-icon {
-  display: flex;               /* 使用flex布局 */
-  align-items: center;         /* 垂直居中 */
-  justify-content: center;     /* 水平居中 */
-  background-color: #ff9900;
-  color: #fff;
-  font-size: 14px;
-  padding: 10px 20px;          /* 调整按钮的内边距 */
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.feedback-container {
   position: fixed;
-  bottom: 20px;
   right: 20px;
-  border-radius: 5px;          /* 保持圆角 */
-  width: 80px;                /* 设置固定宽度 */
-  height: 40px;                /* 设置固定高度 */
-  text-align: center;          /* 确保文字居中 */
-  z-index: 9999;               /* 设置较高的z-index，确保在最顶层 */
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 9999;
 }
 
+.feedback-icon {
+  background-color: #32CD32;
+  color: white;
+  border-radius: 50%;
+  /* 使按钮成为圆形 */
+  font-size: 24px;
+  width: 60px;
+  /* 设置固定的宽度 */
+  height: 60px;
+  /* 设置固定的高度，与宽度相等，确保按钮是圆形 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
+  position: relative;
+}
 
+.tooltip {
+  display: none;
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  white-space: nowrap;
+  z-index: 10000;
+}
 
+.feedback-container:hover .tooltip {
+  display: block;
+}
+
+.dialog-footer {
+  display: flex;
+  /* 使用 Flexbox 布局 */
+  justify-content: center;
+  /* 水平居中 */
+  align-items: center;
+  /* 垂直居中 */
+  gap: 10px;
+  /* 设置按钮之间的间距 */
+  padding: 10px 0;
+  /* 添加适当的内边距 */
+}
+
+.dialog-footer .el-button {
+  display: flex;
+  /* 使用 Flexbox 布局 */
+  justify-content: center;
+  /* 水平居中 */
+  align-items: center;
+  /* 垂直居中 */
+  padding: 0 15px;
+  /* 调整按钮内边距，保持内容居中 */
+}
 </style>

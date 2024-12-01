@@ -86,7 +86,7 @@ export default {
                 this.$message.error("请输入有效的IP地址！");
                 return;
             }
-            getIpInfo(this.ipAddress).then(res => {
+            getIpInfo({ip: this.ipAddress}).then(res => {
                 console.log(res);
                 if (res.data.code == 200) {
                     this.result = {

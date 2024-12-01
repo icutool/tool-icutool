@@ -1,9 +1,19 @@
 import axios from 'axios';
-
+import {baseURL} from "@/utils/index";
+axios.defaults.baseURL = baseURL
 // 获取Ip信息
-export function getIpInfo(ipAddress) {
+export function getIpInfo(data) {
   return axios({
-    url: "https://icutool.cn/api/util/ip?ip=" + ipAddress,
+    url: "util/ip",
     method: "get",
+    params: data,
+  });
+}
+
+export function feedback(data) {
+  return axios({
+    url: "/feedback/add",
+    method: "post",
+    data,
   });
 }
