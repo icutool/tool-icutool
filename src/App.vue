@@ -41,7 +41,7 @@
         <el-radio label="1">建议</el-radio>
         <el-radio label="2">其他</el-radio>
       </el-radio-group>
-      <el-input v-model="email" type="textarea" placeholder="联系邮箱📮" rows="1" @blur="validateEmail"></el-input>
+      <el-input v-model="email" type="email" placeholder="联系邮箱📮" rows="1" @blur="validateEmail"></el-input>
       <el-input v-model="feedback" type="textarea" placeholder="请输入您的反馈" rows="6"></el-input>
       <span slot="footer" class="dialog-footer">
         <el-button @click="cancelFeedback">取消</el-button>
