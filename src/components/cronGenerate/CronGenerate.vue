@@ -395,7 +395,7 @@ export default {
   },
   data() {
     return {
-      activeTab: 'weekday',
+      activeTab: 'second',
       secend: '*',
       minute: '*',
       hour: '*',
@@ -666,7 +666,7 @@ export default {
 }
 
 .execute-button {
-  background-color: #0a7234;
+  background-color: #32CD32;
   color: #fff;
   border: none;
   border-radius: 5px;

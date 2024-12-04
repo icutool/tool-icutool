@@ -4,7 +4,7 @@ axios.defaults.baseURL = baseURL
 // 获取Ip信息
 export function getIpInfo(data) {
   return axios({
-    url: "util/ip",
+    url: "/util/ip",
     method: "get",
     params: data,
   });
