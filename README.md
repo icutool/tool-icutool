@@ -30,7 +30,7 @@
 使用vue2框架
 
 ### 预览
-
+<img src="https://gitee.com/plusboy/tool-icutool/raw/master/view.png" width="800" />
 
 ### 项目部署
 安装依赖
