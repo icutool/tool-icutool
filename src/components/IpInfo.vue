@@ -37,7 +37,7 @@
     </div>
 </template>
 <script>
-import { getIpInfo } from "@/api/request";
+import { getIpInfo, getMyIpInfo } from "@/api/request";
 export default {
     metaInfo() {
         return {
@@ -66,6 +66,26 @@ export default {
             },
         };
     },
+    created() {
+        // 获取用户IP地址
+        getMyIpInfo().then(res => {
+            if (res.data.code == 200) {
+                this.ipAddress = res.data.data.ip;
+                this.result = {
+                    country: res.data.data.country || "未知",
+                    region: res.data.data.region || "未知",
+                    province: res.data.data.province || "未知",
+                    city: res.data.data.city || "未知",
+                    isp: res.data.data.isp || "未知",
+                };
+            } else {
+                console.log(res.msg);
+                this.$message.error(res.data.message || "查询失败！");
+            }
+        }).catch(error => {
+            console.log(error.msg || error.message);
+        })
+    },
     methods: {
         handleClear() {
             this.result = {
@@ -86,7 +106,7 @@ export default {
                 this.$message.error("请输入有效的IP地址！");
                 return;
             }
-            getIpInfo({ip: this.ipAddress}).then(res => {
+            getIpInfo({ ip: this.ipAddress }).then(res => {
                 console.log(res);
                 if (res.data.code == 200) {
                     this.result = {

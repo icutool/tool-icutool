@@ -9,7 +9,13 @@ export function getIpInfo(data) {
     params: data,
   });
 }
-
+export function getMyIpInfo(data) {
+  return axios({
+    url: "/util/myIP",
+    method: "get",
+    params: data,
+  });
+}
 export function feedback(data) {
   return axios({
     url: "/feedback/add",
