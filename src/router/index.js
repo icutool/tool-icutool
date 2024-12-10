@@ -5,7 +5,7 @@ import TimestampConverter from '../components/TimestampConverter.vue';
 import IpInfo from '../components/IpInfo.vue';
 import CronExp from '../components/cronGenerate/CronExp.vue';
 import CronGenerate from '../components/cronGenerate/CronGenerate.vue';
-import cronTest from '../components/cronGenerate/cronTest.vue';
+import Yaml2Properties from '../components/Yaml2Properties.vue';
 
 Vue.use(VueRouter);
 
@@ -36,9 +36,9 @@ const routes = [
     component: CronGenerate,
   },
   {
-    path: '/test',
-    name: 'test',
-    component: cronTest,
+    path: '/yaml',
+    name: 'yaml转换properties',
+    component: Yaml2Properties,
   },
 ];
 

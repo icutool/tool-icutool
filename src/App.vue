@@ -15,6 +15,10 @@
           <el-menu-item index="/cronGenerate">生成</el-menu-item>
         </el-submenu>
         <el-submenu index="3">
+          <template slot="title">文本工具</template>
+          <el-menu-item index="/yaml">yaml转换properties</el-menu-item>
+        </el-submenu>
+        <el-submenu index="4">
           <template slot="title">网络工具</template>
           <el-menu-item index="/encoding">编码/加密</el-menu-item>
         </el-submenu>
