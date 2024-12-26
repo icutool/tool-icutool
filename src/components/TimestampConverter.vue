@@ -129,6 +129,9 @@ export default {
       // 如果不符合以上任何一种，返回 "Unknown"
       return 'error';
     }
+  },
+  mounted() {
+    this.inputTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
   }
 };
 </script>
